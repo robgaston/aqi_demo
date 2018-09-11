@@ -1,8 +1,8 @@
 {
     "container": "map",
     "accessToken": "pk.eyJ1Ijoicmdhc3RvbiIsImEiOiJJYTdoRWNJIn0.MN6DrT07IEKXadCU8xpUMg",
-    "style": "mapbox://styles/rgaston/cjlo33b2v6sqx2sle4euc29jw",
-    "center": [-122.34374999999999,37.996162679728116],
-    "zoom": 10,
+    "style": "mapbox://styles/rgaston/cjlo33b2v6sqx2sle4euc29jw?fresh=true",
+    "center": [-122.344,37.936],
+    "zoom": 8,
     "pitch": 0
 }

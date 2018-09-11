@@ -21,7 +21,7 @@ main {
     height: 100%;
 }
 
-#popup, #legend, header {
+header {
     position: fixed;
     background-color: rgba(221, 221, 221, 0.9);
     color: #1f1f1f;
@@ -32,43 +32,8 @@ main {
     box-shadow: -2px -2px 2px 1px rgba(139, 139, 139, 0.2);
 }
 
-#popup {
-    display: none;
-    top: 10px;
-    right: 10px;
-    max-width: 300px;
-}
-
-#legend {
-    bottom: 30px;
-    right: 10px;
-}
-
 header {
     top: 10px;
     left: 10px;
     margin: 0 370px 0 0;
-}
-
-.color {
-    display: inline-block;
-    width: 10px;
-    height: 10px;
-    border: solid 1px black;
-}
-
-h4 {
-    margin: 0 0 10px;
-}
-
-a {
-    color: #1f1f1f;
-}
-
-h3 {
-    margin: 0 0 5px;
-}
-
-.subtitle {
-    font-size: 0.8em;
 }

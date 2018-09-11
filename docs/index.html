@@ -42,77 +42,12 @@
     <body>
         <main>
             <header>
-                <h3>
-                    Cataloged historic sites in Los Angeles by neighborhood
-                </h3>
-                <div class="subtitle">
-                    (data sources:
-                    <a href="http://historicplacesla.org" target="_blank">http://historicplacesla.org</a>,
-                    <a href="http://boundaries.latimes.com/" target="_blank">http://boundaries.latimes.com/</a>)
-                </div>
+                <select>
+                    <option value="1">Day 1</option>
+                    <option value="2" selected>Day 2</option>
+                </select>
             </header>
             <div id="map"></div>
-            <div id="popup" style="display:none;">
-                <h4 class="county-name"></h4>
-                <div>
-                    <span class="count"></span>
-                    historic site(s) cataloged
-                </div>
-            </div>
-            <div id="legend">
-                <h4>
-                    # of sites cataloged
-                </h4>
-                <div class="entry">
-                    <span class="color" style="background-color:#fef0d9;">
-                    </span>
-                    <span class="value">
-                        0-29
-                    </span>
-                </div>
-                <div class="entry">
-                    <span class="color" style="background-color:#fdd49e;">
-                    </span>
-                    <span class="value">
-                        30-99
-                    </span>
-                </div>
-                <div class="entry">
-                    <span class="color" style="background-color:#fdbb84;">
-                    </span>
-                    <span class="value">
-                        100-299
-                    </span>
-                </div>
-                <div class="entry">
-                    <span class="color" style="background-color:#fc8d59;">
-                    </span>
-                    <span class="value">
-                        300-599
-                    </span>
-                </div>
-                <div class="entry">
-                    <span class="color" style="background-color:#ef6548;">
-                    </span>
-                    <span class="value">
-                        600-799
-                    </span>
-                </div>
-                <div class="entry">
-                    <span class="color" style="background-color:#d7301f;">
-                    </span>
-                    <span class="value">
-                        800-1199
-                    </span>
-                </div>
-                <div class="entry">
-                    <span class="color" style="background-color:#990000;">
-                    </span>
-                    <span class="value">
-                        &gt;=1200
-                    </span>
-                </div>
-            </div>
         </main>
         <div class="loading"></div>
     <script type="text/javascript" src="main.js"></script></body>

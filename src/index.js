@@ -3,14 +3,14 @@ import "mapbox-gl/dist/mapbox-gl.css";
 import * as mapboxgl from "mapbox-gl";
 import settings from "./settings.json";
 
+const parser = new DOMParser();
+
 mapboxgl.accessToken = settings.accessToken;
 
 async function init(e) {
     const map = e.target;
-    const custom = await import("./custom-style.json");
     const aqiResponse = await fetch("http://www.baaqmd.gov/Files/Feeds/aqi_rss.xml");
     const aqiText = await aqiResponse.text()
-    const parser = new DOMParser();
     const aqiDOM = parser.parseFromString(aqiText, "application/xml");
 
     let aqiData = [];
@@ -34,55 +34,50 @@ async function init(e) {
         aqiData.push(itemData);
     });
 
-    console.log(aqiData);
+    const zones = ["Eastern Zone", "Coastal and Central Bay", "South Central Bay", "Northern Zone", "Santa Clara Valley"];
+    function setDate(day) {
+        const dayData = aqiData[day-1];
+        zones.forEach((zone, i) => {
+            const forecastData = dayData.zones.find((zoneData) => {
+                return zoneData.title === zone;
+            });
+            map.setFeatureState({
+                id: i+1,
+                source: 'composite',
+                sourceLayer: 'forecast-demo'
+            }, {
+                forecast: forecastData.measurement
+            });
+        })
+    }
 
-    let style = map.getStyle();
-
-    style.sources = {
-        ...style.sources,
-        ...custom.sources
+    document.querySelector('select').onchange = (e) => {
+        const day = parseInt(e.target.value);
+        setDate(day);
     };
-    style.layers.push(...custom.layers);
 
-    let forecastLayer = style.layers.find((l) => l.id === 'features');
+    setDate(2);
 
-    forecastLayer.paint["fill-opacity"] = ["case",
+    map.setPaintProperty('forecast-demo', 'fill-opacity', ["case",
         ["boolean", ["feature-state", "hover"], false],
-        1,
-        0.5
-    ];
-    forecastLayer.paint["fill-color"] = [
-      "step",
-      ["feature-state", "forecast"],
-      "#096",
-      61,
-      "#ffde33"
-    ]
+        0.7,
+        0.3
+    ]);
 
-    let zones = ["Eastern Zone", "Coast and Central Bay", "South Central Bay", "Northern Zone", "Santa Clara Valley"];
-    zones.forEach((zone, i) => {
-        map.setFeatureState({
-            id: i+1,
-            source: 'composite',
-            sourceLayer: 'features'
-        }, {forecast: 62});
-    })
-
-    let hoveredFeature = false;
-    map.on("mousemove", "features", (e) => {
-        if (hoveredFeature) {
-            map.setFeatureState(hoveredFeature, {hover: false});
-            hoveredFeature = false;
-        }
+    let hoveredFeature = null;
+    map.on("mousemove", "forecast-demo", function(e) {
         if (e.features.length > 0) {
+            if (hoveredFeature) {
+                map.setFeatureState(hoveredFeature, {
+                    hover: false
+                });
+            }
             hoveredFeature = e.features[0];
-            console.log(hoveredFeature);
-            map.setFeatureState(hoveredFeature, {hover: true});
+            map.setFeatureState(hoveredFeature, {
+                hover: true
+            });
         }
     });
-
-
-    map.setStyle(style);
 }
 
 new mapboxgl.Map(settings).on("load", init);
